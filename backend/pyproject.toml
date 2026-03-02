@@ -15,6 +15,7 @@ pydantic = "^2.8.2"
 pydantic-settings = "^2.4.0"
 requests = "^2.31.0"
 mailersend = "^2.0.0"
+pinggy = "^0.0.20"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.0"

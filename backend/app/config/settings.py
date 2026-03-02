@@ -2,10 +2,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    smtp_email: str
-    smtp_password: str
+    smtp_email: str | None = None
+    smtp_password: str | None = None
     smtp_host: str = "smtp.gmail.com"
     smtp_port: int = 587
+
+    # smtp (local) or mailersend
+    email_provider: str = "smtp"
 
     bookings_path: str = "app/data/bookings.json"
 

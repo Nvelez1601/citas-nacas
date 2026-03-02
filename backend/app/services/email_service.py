@@ -2,6 +2,7 @@ from email.message import EmailMessage
 from pathlib import Path
 import logging
 import smtplib
+import ssl
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from mailersend import MailerSendClient, EmailBuilder
@@ -13,12 +14,28 @@ from app.utils.ics_generator import build_ics
 TEMPLATE_DIR = Path(__file__).resolve().parents[1] / "templates"
 
 
+def _send_via_smtp(message: EmailMessage):
+    if not settings.smtp_email or not settings.smtp_password:
+        raise RuntimeError("SMTP_EMAIL or SMTP_PASSWORD not configured")
+
+    host = settings.smtp_host
+    port = settings.smtp_port
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP(host, port) as server:
+        server.starttls(context=context)
+        server.login(settings.smtp_email, settings.smtp_password)
+        server.send_message(message)
+
+
 def _send_via_mailersend(message: EmailMessage):
     api_key = settings.mailersend_api_key
     if not api_key:
         raise RuntimeError("MAILERSEND_API_KEY not configured")
 
-    from_email = settings.mailersend_from_email or settings.smtp_email
+    from_email = settings.mailersend_from_email
+    if not from_email:
+        raise RuntimeError("MAILERSEND_FROM_EMAIL not configured")
     from_name = settings.mailersend_from_name
     to_addrs = [a.strip() for a in message.get("To", "").split(",") if a.strip()]
 
@@ -72,32 +89,22 @@ def send_booking_email(email: str, comments: str | None, date_obj: DateModel, st
 
     message = EmailMessage()
     message["Subject"] = f"Booking confirmed: {date_obj.name}"
-    message["From"] = settings.smtp_email
-    # include owner as second recipient if configured
-    to_list = [email]
-    if getattr(settings, "owner_email", None):
-        to_list.append(settings.owner_email)
-    message["To"] = ", ".join(to_list)
+    from_addr = (
+        settings.smtp_email
+        or settings.mailersend_from_email
+        or "no-reply@example.com"
+    )
+    message["From"] = from_addr
+    # Un solo destinatario principal
+    message["To"] = email
     message.set_content(text_body)
     message.add_alternative(html_body, subtype="html")
 
     ics_content = build_ics(date_obj, start_dt)
     message.add_attachment(ics_content, subtype="calendar", filename="invite.ics")
 
-    # Try MailerSend first (SDK)
-    if settings.mailersend_api_key:
-        try:
-            _send_via_mailersend(message)
-            return
-        except Exception:
-            logging.exception("Failed to send booking email via MailerSend, falling back to SMTP")
-
-    # Fallback to SMTP
-    try:
-        with smtplib.SMTP(settings.smtp_host, settings.smtp_port) as smtp:
-            smtp.starttls()
-            smtp.login(settings.smtp_email, settings.smtp_password)
-            smtp.send_message(message)
-    except Exception:
-        logging.exception("Failed to send booking email via SMTP")
-        raise
+    provider = getattr(settings, "email_provider", "smtp").lower()
+    if provider == "smtp":
+        _send_via_smtp(message)
+    else:
+        _send_via_mailersend(message)
