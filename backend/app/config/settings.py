@@ -11,6 +11,9 @@ class Settings(BaseSettings):
 
     timezone: str = "America/Caracas"
     cors_origins: str = "http://localhost:5173"
+    mailersend_api_key: str | None = None
+    mailersend_from_email: str | None = None
+    mailersend_from_name: str | None = None
 
     @property
     def cors_origins_list(self) -> list[str]:
