@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Work+Sans:wght@300;400;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-start: #fadadd;
+  --bg-end: #fbeef1;
+  --card: #ffffff;
+  --accent: #f38ba7;
+  --accent-dark: #e66b8a;
+  --text: #2f1b1b;
+}
+
+body {
+  font-family: "Work Sans", sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top, #fde9ee 0%, var(--bg-start) 45%, var(--bg-end) 100%);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Playfair Display", serif;
+}
