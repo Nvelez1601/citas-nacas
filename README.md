@@ -1,11 +1,11 @@
 # Citas Nacas
 
-Catalogo de experiencias con reservas. Frontend en React + Vite + Tailwind. Backend en FastAPI con servicios para Google Calendar y correo HTML.
+Catalogo de experiencias con reservas. Frontend en React + Vite + Tailwind. Backend en FastAPI con correo HTML e invitacion .ics.
 
 ## Stack
 
 - Frontend: React, Vite, TailwindCSS, Heroicons, tsparticles
-- Backend: FastAPI, gcsa, Jinja2, python-dotenv, smtplib
+- Backend: FastAPI, Jinja2, python-dotenv, smtplib
 - Arquitectura backend: Router (Controller) + Service + Model
 
 ## Requisitos
@@ -19,8 +19,7 @@ Catalogo de experiencias con reservas. Frontend en React + Vite + Tailwind. Back
 1) Entra a backend
 2) Instala dependencias con Poetry
 3) Completa el archivo .env
-4) Coloca el archivo de credenciales de Google Calendar
-5) Levanta la API
+4) Levanta la API
 
 Comandos:
 
@@ -32,28 +31,9 @@ poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 Notas:
 
-- Edita [backend/.env](backend/.env) con tus credenciales SMTP y el calendario.
-- Crea el archivo de credenciales de Google Calendar en [backend/app/config/calendar_credentials.json](backend/app/config/calendar_credentials.json).
-
-Contenido base recomendado para el archivo (reemplaza los valores con los tuyos):
-
-```json
-{
-	"installed": {
-		"client_id": "TU_CLIENT_ID.apps.googleusercontent.com",
-		"client_secret": "TU_CLIENT_SECRET",
-		"project_id": "TU_PROJECT_ID",
-		"auth_uri": "https://accounts.google.com/o/oauth2/auth",
-		"token_uri": "https://oauth2.googleapis.com/token",
-		"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-		"redirect_uris": [
-			"http://localhost"
-		]
-	}
-}
-```
-
-Ese archivo ya esta ignorado por git para proteger las credenciales.
+- Edita [backend/.env](backend/.env) con tus credenciales SMTP.
+- El backend envia una invitacion .ics adjunta para que el usuario agregue la cita a su calendario.
+- Las reservas se guardan localmente en [backend/app/data/bookings.json](backend/app/data/bookings.json) y ese archivo esta ignorado por git.
 
 ## Configuracion frontend
 
@@ -73,6 +53,28 @@ Si el backend corre en otra URL, crea un .env en frontend:
 
 ```
 VITE_API_BASE_URL=https://tu-backend
+```
+
+## Correr en local (backend + frontend)
+
+1) Abre dos terminales en la raiz del proyecto.
+2) En la terminal 1, levanta el backend.
+3) En la terminal 2, levanta el frontend apuntando al backend.
+
+Terminal 1:
+
+```bash
+cd backend
+poetry install
+poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Terminal 2:
+
+```bash
+cd frontend
+npm install
+VITE_API_BASE_URL=http://localhost:8000 npm run dev
 ```
 
 ## Endpoints
@@ -105,18 +107,10 @@ poetry run uvicorn app.main:app --host 0.0.0.0 --port 10000
 - SMTP_PASSWORD
 - SMTP_HOST
 - SMTP_PORT
-- CALENDAR_ID
 - TIMEZONE
 - CORS_ORIGINS
 
-7) Crea un Secret File en Render con la ruta:
-
-```
-app/config/calendar_credentials.json
-```
-
-8) Pega el contenido JSON de tus credenciales en ese Secret File.
-9) Despliega el servicio.
+7) Despliega el servicio.
 
 ### Frontend (Static Site)
 
@@ -152,5 +146,5 @@ VITE_API_BASE_URL=https://tu-backend-render.onrender.com
 1) Usuario selecciona cita
 2) Abre modal y completa email
 3) POST /api/book
-4) Backend valida, crea evento y envia email
+4) Backend valida, guarda la reserva y envia email con invitacion .ics
 5) Frontend muestra confirmacion

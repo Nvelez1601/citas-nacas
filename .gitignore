@@ -8,6 +8,7 @@ backend/.pytest_cache/
 backend/.env
 .env
 backend/app/config/calendar_credentials.json
+backend/app/data/bookings.json
 
 # Node
 frontend/node_modules/

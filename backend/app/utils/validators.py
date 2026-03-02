@@ -1,6 +1,6 @@
 import re
 
-EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com)$")
+EMAIL_REGEX = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
 def is_valid_email(email: str) -> bool:

@@ -1,6 +1,27 @@
-import { CalendarIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import {
+  BoltIcon,
+  CalendarIcon,
+  CameraIcon,
+  ChatBubbleLeftRightIcon,
+  HeartIcon,
+  RocketLaunchIcon,
+  SunIcon,
+  TrophyIcon
+} from "@heroicons/react/24/outline";
+
+const iconById = {
+  1: TrophyIcon,
+  2: BoltIcon,
+  3: HeartIcon,
+  4: CameraIcon,
+  5: ChatBubbleLeftRightIcon,
+  6: SunIcon,
+  7: RocketLaunchIcon
+};
 
 export default function DateCard({ data, onSelect }) {
+  const ActivityIcon = iconById[data.id] || TrophyIcon;
+
   return (
     <article className="group relative overflow-hidden rounded-3xl bg-white/80 p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-xl">
       <div className="flex items-center justify-between">
@@ -12,7 +33,7 @@ export default function DateCard({ data, onSelect }) {
             {data.name}
           </h2>
         </div>
-        <SparklesIcon className="h-8 w-8 text-[#f38ba7]" />
+        <ActivityIcon className="h-8 w-8 text-[#f38ba7]" />
       </div>
 
       <div className="mt-6 flex items-center gap-2 text-sm text-[#4b2f2f]">

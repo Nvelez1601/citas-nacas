@@ -26,7 +26,7 @@ def create_event(email: str, comments: str | None, date_obj: DateModel, start_dt
 
     try:
         calendar = GoogleCalendar(
-            calendar=settings.calendar_id,
+            default_calendar=settings.calendar_id,
             credentials_path=settings.calendar_credentials_path,
         )
         created = calendar.add_event(event)

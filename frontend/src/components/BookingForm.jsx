@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 
 import { bookDate } from "../services/api.js";
 
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com)$/;
+const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 export default function BookingForm({ dateId }) {
   const [email, setEmail] = useState("");
