@@ -19,3 +19,8 @@ frontend/dist/
 
 # OS
 .DS_Store
+
+#virtual environments
+.venv
+venv
+

@@ -490,6 +490,24 @@ files = [
 ]
 
 [[package]]
+name = "pinggy"
+version = "0.0.20"
+description = "Tunneling tool"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "pinggy-0.0.20-cp310-abi3-macosx_11_0_universal2.whl", hash = "sha256:26a387d9a5f3cb56afe6a4e08161813d0216acdf94ca5f8f94f978703568829c"},
+    {file = "pinggy-0.0.20-cp310-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:f86b9c922f652f12ec19266c5ae57e5a770c1ac7cd639a561a9b046580542b9d"},
+    {file = "pinggy-0.0.20-cp310-abi3-manylinux_2_28_armv7l.whl", hash = "sha256:3e9351aa807c0e5b6a4a9a8e1f86f5c08d677d2b57477b400270d1d7b8811c14"},
+    {file = "pinggy-0.0.20-cp310-abi3-manylinux_2_28_i686.whl", hash = "sha256:b6d05f1c8fdac4088f4bceaf2ae0d4e79bffa048c60a812ba8413cbb6a532bf3"},
+    {file = "pinggy-0.0.20-cp310-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:ee32e0d4a47cbea263bd5d6f8d66088b010f9eea0d37ef1c786a2330326ebec8"},
+    {file = "pinggy-0.0.20-cp310-abi3-win32.whl", hash = "sha256:fcb862e2b4f1694aa473ce4a3baa071a1b15b3df9fea7475f13693e6d1642bf7"},
+    {file = "pinggy-0.0.20-cp310-abi3-win_amd64.whl", hash = "sha256:4dc7c21485d1d296fe26a4aee3d263a74d9e7b2d642c08ef8011fcec92924bdb"},
+    {file = "pinggy-0.0.20-cp310-abi3-win_arm64.whl", hash = "sha256:2aff708d57520ef4b9112258e60b9e73ed8fc0c90e6add36f66ec0f390516fee"},
+]
+
+[[package]]
 name = "pluggy"
 version = "1.6.0"
 description = "plugin and hook calling mechanisms for python"
@@ -1193,4 +1211,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "68e376d121c2d9c52fb8568a13d3188506308ae0b4f81a6acbe409408cde633b"
+content-hash = "1c4235fa1f08aded7e0f402419f88559c9035097a92cd832829ec67a9ca8f5b1"

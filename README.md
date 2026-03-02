@@ -5,7 +5,7 @@ Catalogo de experiencias con reservas. Frontend en React + Vite + Tailwind. Back
 ## Stack
 
 - Frontend: React, Vite, TailwindCSS, Heroicons, tsparticles
-- Backend: FastAPI, Jinja2, python-dotenv, smtplib
+- Backend: FastAPI, Jinja2, python-dotenv, MailerSend SDK (API HTTP)
 - Arquitectura backend: Router (Controller) + Service + Model
 
 ## Requisitos
@@ -19,6 +19,14 @@ Catalogo de experiencias con reservas. Frontend en React + Vite + Tailwind. Back
 1) Entra a backend
 2) Instala dependencias con Poetry
 3) Completa el archivo .env
+
+Variables principales (local):
+
+- TIMEZONE (ej. `America/Caracas`)
+- CORS_ORIGINS (ej. `http://localhost:5173`)
+- MAILERSEND_API_KEY (token de API de MailerSend)
+- MAILERSEND_FROM_EMAIL (ej. `no-reply@test-...mlsender.net`)
+- MAILERSEND_FROM_NAME (ej. `Citas Nacas`)
 4) Levanta la API
 
 Comandos:
@@ -55,12 +63,10 @@ poetry run uvicorn app.main:app --host 0.0.0.0 --port $PORT
 
 7) Variables de entorno (añádelas en la pestaña "Environment"/Secrets de Render):
 
-- `SMTP_EMAIL` — cuenta remitente
-- `SMTP_PASSWORD` — contraseña o App Password
-- `SMTP_HOST` — p.ej. `smtp.gmail.com`
-- `SMTP_PORT` — p.ej. `587`
-- `OWNER_EMAIL` — email del dueño (recibe copia)
-- `TIMEZONE` — p.ej. `Europe/Madrid`
+- `MAILERSEND_API_KEY` — token de API de MailerSend
+- `MAILERSEND_FROM_EMAIL` — remitente con el dominio verificado de MailerSend
+- `MAILERSEND_FROM_NAME` — nombre mostrable del remitente
+- `TIMEZONE` — p.ej. `America/Caracas`
 - `CORS_ORIGINS` — orígenes permitidos para la UI (coma-separados)
 - `BOOKINGS_PATH` — opcional, p.ej. `app/data/bookings.json` (ver nota de persistencia)
 
@@ -70,6 +76,11 @@ Nota: si prefieres evitar Poetry en Render, otra opción es exportar `requiremen
 
 ### Frontend (Static Site)
 
+## En local
+
+```bash
+VITE_API_BASE_URL=http://localhost:8000 npm run dev -- --host 0.0.0.0 --port 5173
+```
 1) En Render: crea un nuevo **Static Site** y conecta el mismo repo.
 2) Configura **Root Directory**: `frontend`
 3) Build Command:
@@ -91,8 +102,8 @@ Ejemplo de petición para crear una reserva (ajusta `date_id` y `email`):
 
 ```bash
 curl -X POST https://TU_BACKEND.onrender.com/api/book \
-	-H "Content-Type: application/json" \
-	-d '{"date_id": 3, "email": "cliente@example.com", "dress_code": "Casual"}'
+  -H "Content-Type: application/json" \
+  -d '{"date_id": 3, "email": "cliente@example.com", "comments": "Comentarios opcionales"}'
 ```
 
 Respuesta esperada (JSON):
@@ -117,61 +128,6 @@ Respuesta esperada (JSON):
 - Si tienes tráfico real, migra `bookings` a una DB antes de usar en producción.
 
 Si quieres, puedo: (a) actualizar `booking_store.py` para Postgres y añadir instrucciones de conexión en Render, o (b) ayudarte a crear los servicios en tu dashboard de Render si me das permiso para realizar pasos guiados.
-- POST /api/book
-
-## Render - Deploy paso a paso
-
-### Backend (Web Service)
-
-1) Sube el repositorio a GitHub.
-2) En Render, crea un nuevo Web Service y conecta el repo.
-3) Root Directory: backend
-4) Build Command:
-
-```bash
-pip install poetry && poetry install --no-root
-```
-
-5) Start Command:
-
-```bash
-poetry run uvicorn app.main:app --host 0.0.0.0 --port $PORT
-```
-
-6) En Environment, agrega estas variables:
-
-- SMTP_EMAIL
-- SMTP_PASSWORD
-- SMTP_HOST
-- SMTP_PORT
-- TIMEZONE
-- CORS_ORIGINS
-
-7) Despliega el servicio.
-
-### Frontend (Static Site)
-
-1) En Render, crea un nuevo Static Site y conecta el repo.
-2) Root Directory: frontend
-4) Build Command:
-
-```bash
-npm install && npm run build
-```
-
-4) Publish Directory:
-
-```
-dist
-```
-
-5) En Environment, define:
-
-```
-VITE_API_BASE_URL=https://tu-backend-render.onrender.com
-```
-
-6) Despliega el sitio.
 
 ## Estructura principal
 

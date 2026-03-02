@@ -15,3 +15,8 @@ app.add_middleware(
 )
 
 app.include_router(booking_router, prefix="/api")
+
+
+@app.get("/")
+async def health_check():
+    return {"status": "ok"}
