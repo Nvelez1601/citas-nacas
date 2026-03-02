@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "citas-nacas-backend"
+version = "0.1.0"
+description = "Backend API for Citas Nacas"
+authors = ["Nelson Velez"]
+packages = [{ include = "app" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.0"
+uvicorn = { version = "^0.30.0", extras = ["standard"] }
+gcsa = "^2.3.0"
+python-dotenv = "^1.0.1"
+Jinja2 = "^3.1.4"
+pydantic = "^2.8.2"
+pydantic-settings = "^2.4.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.0"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"

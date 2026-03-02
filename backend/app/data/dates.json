@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Rey de la Colina",
+    "description": "Cita fitness en el volcán. La idea es poder gastar nuestra energía sacando a relucir nuestra buena forma física.",
+    "challenge": "Ambos vamos a subir al mismo tiempo. La idea es no detenernos en ningún momento. Por cada vez que alguno se detenga o se quede muy atrás, habrá una penalización: esa persona tendrá que responder una pregunta vergonzosa y muy personal a la otra persona, y no podrá negarse a responder. Así que ya sabes, prepara tus preguntas... o no te detengas.",
+    "dress_code": "Deportivo",
+    "date": "07-03-2026"
+  },
+  {
+    "id": 2,
+    "name": "Gran Prix",
+    "description": "Carrera en go karts donde la estrategia y la astucia del mejor predominarán para conseguir la victoria.",
+    "challenge": "Consistirá en 1 o 2 carreras. La persona con el mejor tiempo será la victoriosa. El ganador recibirá un cupón de 'Sí a Todo' que podrá canjear dentro de los próximos 30 días. Durante 24 horas ininterrumpidas, el perdedor deberá decir 'sí a todo' sin objeciones. Las reglas del cupón serán de mutuo acuerdo.",
+    "dress_code": "Casual o de carreras",
+    "date": "07-03-2026"
+  },
+  {
+    "id": 3,
+    "name": "Rosita Fresita",
+    "description": "Picnic en el Parque del Este o La Estancia con temática romántica.",
+    "challenge": "Ambas partes deberán llevar cosas de color rosa, blanco y/o rojo al picnic.",
+    "dress_code": "Rosa y colores claros",
+    "date": "07-03-2026"
+  },
+  {
+    "id": 4,
+    "name": "¿Te Ríes de Mí o Conmigo?",
+    "description": "Paseo por Galipán donde ambos nos daremos un respiro de la ciudad.",
+    "challenge": "Ambos participantes deberán tener sus teléfonos cargados y listos. Estarán en una guerra secreta: deberán tomarse fotos desprevenidas cuando el otro no esté mirando. Si alguien es descubierto tomando una foto, deberá borrarla inmediatamente. Al final del día se evaluarán las fotos más graciosas, quién tomó más fotos y cuál fue la mejor.",
+    "dress_code": "Casual y abrigado",
+    "date": "07-03-2026"
+  },
+  {
+    "id": 5,
+    "name": "Top Secrets",
+    "description": "Una cena o comida tranquila acompañada de una conversación profunda.",
+    "challenge": "Ambos deberán preparar un speech sobre una teoría conspirativa de su elección. Se puede utilizar cualquier recurso para alimentar la presentación. La idea es deslumbrar al otro con nuevos horizontes.",
+    "dress_code": "Semiformal o casual chic",
+    "date": "07-03-2026"
+  },
+  {
+    "id": 6,
+    "name": "Paisaje Unicolor",
+    "description": "Un full day en la playa o una ruta relajante donde ambos disfrutaremos de nuestra merecida paz.",
+    "challenge": "Cada jugador elegirá una paleta de color para el otro. Durante el día, deberán tomar fotos únicamente de elementos que pertenezcan a ese color asignado. Al final del día compararán sus repertorios.",
+    "dress_code": "Playero",
+    "date": "07-03-2026"
+  },
+  {
+    "id": 7,
+    "name": "Space Invaders",
+    "description": "Duelo en arcade donde saldrá victoriosa la persona más competitiva y con mayor destreza en videojuegos.",
+    "challenge": "Se jugarán varias partidas acumulando puntos. Sistema de puntuación: Victoria = 5 pts, Derrota = 2 pts, Empate = 3 pts. La persona con mayor puntaje total impondrá una penalización al otro.",
+    "dress_code": "Casual",
+    "date": "07-03-2026"
+  }
+]
