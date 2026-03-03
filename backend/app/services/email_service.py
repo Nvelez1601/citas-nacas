@@ -22,10 +22,27 @@ def _send_via_smtp(message: EmailMessage):
     port = settings.smtp_port
     context = ssl.create_default_context()
 
+    logger = logging.getLogger("citasnacas")
+    from app.utils.logging import js
+    js(
+        logger,
+        logging.INFO,
+        event="email_send_start",
+        provider="smtp",
+        to=message.get("To"),
+        subject=message.get("Subject"),
+    )
     with smtplib.SMTP(host, port) as server:
         server.starttls(context=context)
         server.login(settings.smtp_email, settings.smtp_password)
         server.send_message(message)
+    js(
+        logger,
+        logging.INFO,
+        event="email_send_complete",
+        provider="smtp",
+        to=message.get("To"),
+    )
 
 
 def _send_via_mailersend(message: EmailMessage):
@@ -60,11 +77,37 @@ def _send_via_mailersend(message: EmailMessage):
             disposition="attachment",
         )
 
+    logger = logging.getLogger("citasnacas")
+    from app.utils.logging import js
     client = MailerSendClient(api_key=api_key)
     email = builder.build()
+    js(
+        logger,
+        logging.INFO,
+        event="email_send_start",
+        provider="mailersend",
+        to=message.get("To"),
+        subject=message.get("Subject"),
+    )
     response = client.emails.send(email)
     if not getattr(response, "message_id", None):
-        logging.warning("MailerSend response missing message_id: %s", response)
+        js(
+            logger,
+            logging.WARN,
+            event="email_send_warning",
+            provider="mailersend",
+            to=message.get("To"),
+            response=str(response),
+        )
+    else:
+        js(
+            logger,
+            logging.INFO,
+            event="email_sent",
+            provider="mailersend",
+            message_id=getattr(response, "message_id", None),
+            to=message.get("To"),
+        )
 
 
 def send_booking_email(email: str, comments: str | None, date_obj: DateModel, start_dt):
@@ -103,8 +146,19 @@ def send_booking_email(email: str, comments: str | None, date_obj: DateModel, st
     ics_content = build_ics(date_obj, start_dt)
     message.add_attachment(ics_content, subtype="calendar", filename="invite.ics")
 
+    logger = logging.getLogger("citasnacas")
+    from app.utils.logging import js
     provider = getattr(settings, "email_provider", "smtp").lower()
+    js(
+        logger,
+        logging.INFO,
+        event="email_prepare",
+        provider=provider,
+        to=email,
+        subject=message.get("Subject"),
+    )
     if provider == "smtp":
         _send_via_smtp(message)
     else:
         _send_via_mailersend(message)
+    logger.info("email send flow finished to=%s", message.get("To"))
